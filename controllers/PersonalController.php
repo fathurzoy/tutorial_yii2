@@ -72,7 +72,11 @@ class PersonalController extends Controller
         $model = new Personal();
 
         if ($this->request->isPost) {
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
+                echo "<pre>";
+                print_r($model);
+                die;
+                $model->save();
                 return $this->redirect(['view', 'id_personal' => $model->id_personal]);
             }
         } else {

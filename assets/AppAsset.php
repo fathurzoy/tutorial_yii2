@@ -22,10 +22,16 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/site.css',
+        'custom/vendors/switchery/dist/switchery.min.css',
+        'custom/build/css/custom.min.css',
+        'custom/vendors/iCheck/skins/flat/green.css',
     ];
-    public $js = [];
+    public $js = [
+        'custom/vendors/switchery/dist/switchery.min.js',
+        'custom/vendors/iCheck/icheck.min.js'
+    ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap4\BootstrapAsset',
+        'yiister\gentelella\assets\ThemeAsset',
+        'yiister\gentelella\assets\ExtensionAsset',
     ];
 }
