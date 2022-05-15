@@ -70,7 +70,12 @@ class PersonalController extends Controller
     public function actionCreate()
     {
         $model = new Personal();
-
+        $statusPerkawinan = Personal::STATUS_PERKAWINAN;
+        $agama = Personal::AGAMA;
+        $pendidikan = Personal::PENDIDIKAN;
+        // echo '<pre>';
+        // print_r($statusPerkawinan);
+        // die();
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $model->tanggal_lahir = \Yii::$app->formatter->asDate($model->tanggal_lahir, 'yyyy-MM-dd');
@@ -86,6 +91,9 @@ class PersonalController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'statusPerkawinan' => $statusPerkawinan,
+            'agama' => $agama,
+            'pendidikan' => $pendidikan,
         ]);
     }
 
@@ -100,6 +108,9 @@ class PersonalController extends Controller
     {
         $model = $this->findModel($id_personal);
         $model->tanggal_lahir = date('d-M-Y', strtotime($model->tanggal_lahir));
+        $statusPerkawinan = Personal::STATUS_PERKAWINAN;
+        $agama = Personal::AGAMA;
+        $pendidikan = Personal::PENDIDIKAN;
 
         // if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
         //     return $this->redirect(['view', 'id_personal' => $model->id_personal]);
@@ -117,6 +128,9 @@ class PersonalController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'statusPerkawinan' => $statusPerkawinan,
+            'agama' => $agama,
+            'pendidikan' => $pendidikan,
         ]);
     }
 

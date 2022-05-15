@@ -25,6 +25,10 @@ use Yii;
  */
 class Personal extends \yii\db\ActiveRecord
 {
+    const JENIS_KELAMIN = ['Laki-laki' => 'Laki-laki', 'Perempuan' => 'Perempuan'];
+    const STATUS_PERKAWINAN = ['Belum Menikah' => 'Belum Menikah', 'Menikah' => 'Menikah', 'Cerai Hidup' => 'Cerai Hidup', 'Cerai Mati' => 'Cerai Mati'];
+    const AGAMA = ['Islam' => 'Islam', 'Kristen' => 'Kristen', 'Khatolik' => 'Khatolik', 'Hindu' => 'Hindu', 'Budha' => 'Budha', 'Tionghoa' => 'Tionghoa', 'Lain-lain' => 'Lain-lain'];
+    const PENDIDIKAN = ['SD' => 'SD', 'SLTP' => 'SLTP', 'SLTA' => 'SLTA', 'D3' => 'D3', 'D4' => 'D4', 'S1' => 'S1', 'S2' => 'S2', 'S3' => 'S3'];
     /**
      * {@inheritdoc}
      */
@@ -75,5 +79,10 @@ class Personal extends \yii\db\ActiveRecord
     public function getPegawais()
     {
         return $this->hasMany(Pegawai::className(), ['id_personal' => 'id_personal']);
+    }
+
+    public function getPegawai()
+    {
+        return $this->hasOne(Pegawai::className(), ['id_personal' => 'id_personal']);
     }
 }

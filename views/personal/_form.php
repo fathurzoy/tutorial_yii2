@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\date\DatePicker;
+use kartik\select2\Select2;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Personal */
@@ -72,13 +73,40 @@ use kartik\date\DatePicker;
                 ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'status_perkawinan')->textInput(['maxlength' => true]) ?>
+                <!-- <?= $form->field($model, 'status_perkawinan')->textInput(['maxlength' => true]) ?> -->
+                <?= $form->field($model, 'status_perkawinan')->widget(Select2::classname(), [
+                    'data' => $statusPerkawinan,
+                    'options' => ['placeholder' => 'Pilih Status ...'],
+                    // 'hideSearch'=>true,
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'agama')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'agama')->widget(Select2::classname(), [
+                    'data' => $agama,
+                    'options' => ['placeholder' => 'Pilih Agama ...'],
+                    // 'hideSearch'=>true,
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+                <!-- <?= $form->field($model, 'agama')->textInput(['maxlength' => true]) ?> -->
             </div>
             <div class="col-md-3">
-                <?= $form->field($model, 'pendidikan')->textInput(['maxlength' => true]) ?>
+                <?= $form->field($model, 'pendidikan')->widget(Select2::classname(), [
+                    'data' => $pendidikan,
+                    'options' => ['placeholder' => 'Pilih Pendidikan ...'],
+                    // 'hideSearch'=>true,
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+                <!-- <?= $form->field($model, 'pendidikan')->textInput(['maxlength' => true]) ?> -->
             </div>
         </div>
 

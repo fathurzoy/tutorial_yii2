@@ -70,6 +70,7 @@ AppAsset::register($this);
                                     "items" => [
                                         ["label" => "Home", "url" => "site/index", "icon" => "home"],
                                         ["label" => "Personal", "url" => ["personal/index"], "icon" => "fas fa-user"],
+                                        ["label" => "Pegawai", "url" => ["pegawai/index"], "icon" => "fas fa-users"],
                                         ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                         [
                                             "label" => "Widgets",
