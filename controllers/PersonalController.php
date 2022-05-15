@@ -99,10 +99,16 @@ class PersonalController extends Controller
                     }
 
                     $transaction->commit();
+                    Yii::$app->session->setFlash('success', 'Data Berhasil Disimpan');
                     return $this->redirect(['view', 'id_personal' => $model->id_personal]);
                 } catch (\Exception $e) {
                     $transaction->rollBack();
-                    throw $e;
+                    // echo "<pre>";
+                    // print_r($e->getMessage());
+                    // die;
+                    Yii::$app->session->setFlash('error', $e->getMessage());
+                    return $this->redirect(Yii::$app->request->referrer);
+                    // throw $e;
                 }
             }
         } else {
@@ -165,6 +171,7 @@ class PersonalController extends Controller
     public function actionDelete($id_personal)
     {
         $this->findModel($id_personal)->delete();
+        Yii::$app->session->setFlash('danger', 'Data Berhasil Dihapus');
 
         return $this->redirect(['index']);
     }
