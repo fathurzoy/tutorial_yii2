@@ -9,6 +9,7 @@ use yii\helpers\Html;
 
 use app\assets\AppAsset;
 use app\widgets\Alert;
+use yii\helpers\Url;
 use yii\widgets\Breadcrumbs;
 
 AppAsset::register($this);
@@ -43,14 +44,14 @@ AppAsset::register($this);
                 <div class="left_col scroll-view">
 
                     <div class="navbar nav_title" style="border: 0;">
-                        <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>Gentellela Alela!</span></a>
+                        <a href="/" class="site_title"><i class="fa fa-paw"></i> <span>Fathur!</span></a>
                     </div>
                     <div class="clearfix"></div>
 
                     <!-- menu prile quick info -->
                     <div class="profile">
                         <div class="profile_pic">
-                            <img src="https://images.generated.photos/lwm0goaJdmN3MvIsZoIAFbExK7zdlqrGNvQSAeSPzC8/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/Mjk4OTU3LmpwZw.jpg" alt="..." class="img-circle profile_img">
+                            <img src="<?= Url::base(true) ?>/images/img.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
                             <span>Welcome,</span>
@@ -72,64 +73,12 @@ AppAsset::register($this);
                                     "items" => [
                                         ["label" => "Home", "url" => "site/index", "icon" => "home"],
                                         ["label" => "Personal", "url" => ["personal/index"], "icon" => "fas fa-user"],
-                                        ["label" => "Pegawai", "url" => ["pegawai/index"], "icon" => "fas fa-users"],
-                                        ["label" => "Error page", "url" => ["site/error-page"], "icon" => "close"],
                                         [
-                                            "label" => "Widgets",
-                                            "icon" => "th",
+                                            "label" => "Pegawai",
+                                            "icon" => "fas fa-users",
                                             "url" => "#",
                                             "items" => [
-                                                ["label" => "Menu", "url" => ["site/menu"]],
-                                                ["label" => "Panel", "url" => ["site/panel"]],
-                                            ],
-                                        ],
-                                        [
-                                            "label" => "Badges",
-                                            "url" => "#",
-                                            "icon" => "table",
-                                            "items" => [
-                                                [
-                                                    "label" => "Default",
-                                                    "url" => "#",
-                                                    "badge" => "123",
-                                                ],
-                                                [
-                                                    "label" => "Success",
-                                                    "url" => "#",
-                                                    "badge" => "new",
-                                                    "badgeOptions" => ["class" => "label-success"],
-                                                ],
-                                                [
-                                                    "label" => "Danger",
-                                                    "url" => "#",
-                                                    "badge" => "!",
-                                                    "badgeOptions" => ["class" => "label-danger"],
-                                                ],
-                                            ],
-                                        ],
-                                        [
-                                            "label" => "Multilevel",
-                                            "url" => "#",
-                                            "icon" => "table",
-                                            "items" => [
-                                                [
-                                                    "label" => "Second level 1",
-                                                    "url" => "#",
-                                                ],
-                                                [
-                                                    "label" => "Second level 2",
-                                                    "url" => "#",
-                                                    "items" => [
-                                                        [
-                                                            "label" => "Third level 1",
-                                                            "url" => "#",
-                                                        ],
-                                                        [
-                                                            "label" => "Third level 2",
-                                                            "url" => "#",
-                                                        ],
-                                                    ],
-                                                ],
+                                                ["label" => "Data Pegawai", "url" => ["pegawai/index"]],
                                             ],
                                         ],
                                     ],
@@ -172,22 +121,16 @@ AppAsset::register($this);
                         <ul class="nav navbar-nav navbar-right">
                             <li class="">
                                 <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <img src="https://images.generated.photos/lwm0goaJdmN3MvIsZoIAFbExK7zdlqrGNvQSAeSPzC8/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/Mjk4OTU3LmpwZw.jpg" alt="">John Doe
+                                    <img src="<?= Url::base(true) ?>/images/img.jpg" alt="">John Doe
                                     <span class=" fa fa-angle-down"></span>
                                 </a>
                                 <ul class="dropdown-menu dropdown-usermenu pull-right">
                                     <li><a href="javascript:;"> Profile</a>
                                     </li>
                                     <li>
-                                        <a href="javascript:;">
-                                            <span class="badge bg-red pull-right">50%</span>
-                                            <span>Settings</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:;">Help</a>
-                                    </li>
-                                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a>
+                                        <?= Yii::$app->user->isGuest ? ('<a href="login.php?r=site/login"><i class="fa fa-sign-in pull-right"></i> Log In</a>'
+                                        ) : ('<a data-method="post" href="' . Url::to(['site/logout']) . '"><i class="fa fa-sign-out pull-right"></i> Log Out (' . Yii::$app->user->identity->username . ')</a>'
+                                        ) ?>
                                     </li>
                                 </ul>
                             </li>
@@ -195,55 +138,13 @@ AppAsset::register($this);
                             <li role="presentation" class="dropdown">
                                 <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
                                     <i class="fa fa-envelope-o"></i>
-                                    <span class="badge bg-green">6</span>
+                                    <span class="badge bg-green">1</span>
                                 </a>
                                 <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                     <li>
                                         <a>
                                             <span class="image">
-                                                <img src="https://images.generated.photos/lwm0goaJdmN3MvIsZoIAFbExK7zdlqrGNvQSAeSPzC8/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/Mjk4OTU3LmpwZw.jpg" alt="Profile Image" />
-                                            </span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image">
-                                                <img src="https://images.generated.photos/lwm0goaJdmN3MvIsZoIAFbExK7zdlqrGNvQSAeSPzC8/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/Mjk4OTU3LmpwZw.jpg" alt="Profile Image" />
-                                            </span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image">
-                                                <img src="https://images.generated.photos/lwm0goaJdmN3MvIsZoIAFbExK7zdlqrGNvQSAeSPzC8/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/Mjk4OTU3LmpwZw.jpg" alt="Profile Image" />
-                                            </span>
-                                            <span>
-                                                <span>John Smith</span>
-                                                <span class="time">3 mins ago</span>
-                                            </span>
-                                            <span class="message">
-                                                Film festivals used to be do-or-die moments for movie makers. They were where...
-                                            </span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a>
-                                            <span class="image">
-                                                <img src="https://images.generated.photos/lwm0goaJdmN3MvIsZoIAFbExK7zdlqrGNvQSAeSPzC8/rs:fit:512:512/wm:0.95:sowe:18:18:0.33/czM6Ly9pY29uczgu/Z3Bob3Rvcy1wcm9k/LnBob3Rvcy92M18w/Mjk4OTU3LmpwZw.jpg" alt="Profile Image" />
+                                                <img src="<?= Url::base(true) ?>/images/img.jpg" alt="Profile Image" />
                                             </span>
                                             <span>
                                                 <span>John Smith</span>
@@ -305,8 +206,7 @@ AppAsset::register($this);
             <!-- footer content -->
             <footer>
                 <div class="pull-right">
-                    Gentelella - Bootstrap Admin Template by <a href="https://colorlib.com" rel="nofollow" target="_blank">Colorlib</a><br />
-                    Extension for Yii framework 2 by <a href="http://yiister.ru" rel="nofollow" target="_blank">Yiister</a>
+                    Fathur
                 </div>
                 <div class="clearfix"></div>
             </footer>
