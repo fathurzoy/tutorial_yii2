@@ -2,11 +2,19 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use kartik\date\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Personal */
 /* @var $form yii\widgets\ActiveForm */
 ?>
+
+<!-- 
+<style>
+    label {
+        margin-right: 30px;
+    }
+</style> -->
 
 <div class="x_panel">
     <div class="x_title">
@@ -26,14 +34,22 @@ use yii\widgets\ActiveForm;
                 <?= $form->field($model, 'nama_panggilan')->textInput(['maxlength' => true]) ?>
             </div>
             <div class="col-md-2">
-                <label>Jenis Kelamin</label>
+                <!-- <label>Jenis Kelamin</label>
                 <p>
                     Laki-laki:
                     <input type="radio" class="flat" name="Personal[jenis_kelamin]" id="jenis_kelamin" value="Laki-laki" checked="" required /> Perempuan:
                     <input type="radio" class="flat" name="Personal[jenis_kelamin]" id="jenis_kelamin" value="Perempuan" />
-                </p>
+                </p> -->
 
-                <!-- <?= $form->field($model, 'jenis_kelamin')->textInput(['maxlength' => true]) ?> -->
+                <?= $form->field($model, 'jenis_kelamin')->radioList(['Laki-laki' => 'Laki-laki', 'Perempuan' => 'Perempuan'], ['item' => function ($index, $label, $name, $checked, $value) {
+                    // echo $checked;
+                    return '<label style="margin-right:30px;">
+                    <input type="radio" class="flat" name="' . $name . '" value="' . $value . '" ' . ($checked ? "checked" : "") . '>
+                    ' . $label . '
+                    </label>';
+                }]);
+                // die();
+                ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'tempat_lahir')->textInput(['maxlength' => true]) ?>
@@ -43,7 +59,17 @@ use yii\widgets\ActiveForm;
 
         <div class="row">
             <div class="col-md-3">
-                <?= $form->field($model, 'tanggal_lahir')->textInput() ?>
+                <!-- <?= $form->field($model, 'tanggal_lahir')->textInput() ?> -->
+                <?=
+                $form->field($model, 'tanggal_lahir')->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => 'Pilih tanggal ...'],
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-M-yyyy'
+                    ]
+                ]);
+
+                ?>
             </div>
             <div class="col-md-3">
                 <?= $form->field($model, 'status_perkawinan')->textInput(['maxlength' => true]) ?>

@@ -73,9 +73,10 @@ class PersonalController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
-                echo "<pre>";
-                print_r($model);
-                die;
+                $model->tanggal_lahir = \Yii::$app->formatter->asDate($model->tanggal_lahir, 'yyyy-MM-dd');
+                // echo "<pre>";
+                // print_r($model);
+                // die;
                 $model->save();
                 return $this->redirect(['view', 'id_personal' => $model->id_personal]);
             }
@@ -98,9 +99,20 @@ class PersonalController extends Controller
     public function actionUpdate($id_personal)
     {
         $model = $this->findModel($id_personal);
+        $model->tanggal_lahir = date('d-M-Y', strtotime($model->tanggal_lahir));
 
-        if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id_personal' => $model->id_personal]);
+        // if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+        //     return $this->redirect(['view', 'id_personal' => $model->id_personal]);
+        // }
+        if ($this->request->isPost) {
+            if ($model->load($this->request->post())) {
+                $model->tanggal_lahir = \Yii::$app->formatter->asDate($model->tanggal_lahir, 'yyyy-MM-dd');
+                // echo "<pre>";
+                // print_r($model);
+                // die;
+                $model->save();
+                return $this->redirect(['view', 'id_personal' => $model->id_personal]);
+            }
         }
 
         return $this->render('update', [
