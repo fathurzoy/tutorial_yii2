@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\Pegawai;
 use app\models\Personal;
 use app\models\PersonalSearch;
+use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -80,19 +81,29 @@ class PersonalController extends Controller
         // die();
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $modelPegawai->load($this->request->post())) {
-                $model->tanggal_lahir = \Yii::$app->formatter->asDate($model->tanggal_lahir, 'yyyy-MM-dd');
-                $modelPegawai->tanggal_bergabung = \Yii::$app->formatter->asDate($modelPegawai->tanggal_bergabung, 'yyyy-MM-dd');
+                $transaction = Yii::$app->db->beginTransaction();
+                try {
+                    $model->tanggal_lahir = \Yii::$app->formatter->asDate($model->tanggal_lahir, 'yyyy-MM-dd');
+                    $modelPegawai->tanggal_bergabung = \Yii::$app->formatter->asDate($modelPegawai->tanggal_bergabung, 'yyyy-MM-dd');
 
+                    // $model->save(false);
+                    if (!$model->save()) {
+                        throw new \Exception('Gagal menyimpan personal : ' . json_encode($model->getErrors()));
+                    }
+                    $modelPegawai->id_personal = $model->id_personal;
+                    // echo "<pre>";
+                    // print_r($modelPegawai);
+                    // die;
+                    if (!$modelPegawai->save()) {
+                        throw new \Exception('Gagal menyimpan personal : ' . json_encode($modelPegawai->getErrors()));
+                    }
 
-                $model->save();
-                $modelPegawai->id_personal = $model->id_personal;
-                // echo "<pre>";
-                // print_r($modelPegawai);
-                // die;
-
-                $modelPegawai->save();
-
-                return $this->redirect(['view', 'id_personal' => $model->id_personal]);
+                    $transaction->commit();
+                    return $this->redirect(['view', 'id_personal' => $model->id_personal]);
+                } catch (\Exception $e) {
+                    $transaction->rollBack();
+                    throw $e;
+                }
             }
         } else {
             $model->loadDefaultValues();
