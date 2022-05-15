@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\Pegawai;
 use app\models\PegawaiSearch;
+use app\models\Personal;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -68,9 +69,14 @@ class PegawaiController extends Controller
     public function actionCreate()
     {
         $model = new Pegawai();
+        $namaPersonal = Personal::getAllPersonal();
+        // echo "<pre>";
+        // print_r($namaPersonal);
+        // die();
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
+                $model->tanggal_bergabung = \Yii::$app->formatter->asDate($model->tanggal_bergabung, 'yyyy-MM-dd');
                 return $this->redirect(['view', 'id_pegawai' => $model->id_pegawai]);
             }
         } else {
@@ -79,6 +85,7 @@ class PegawaiController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'namaPersonal' => $namaPersonal
         ]);
     }
 
@@ -92,13 +99,16 @@ class PegawaiController extends Controller
     public function actionUpdate($id_pegawai)
     {
         $model = $this->findModel($id_pegawai);
+        $namaPersonal = Personal::getAllPersonal();
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+            $model->tanggal_bergabung = \Yii::$app->formatter->asDate($model->tanggal_bergabung, 'yyyy-MM-dd');
             return $this->redirect(['view', 'id_pegawai' => $model->id_pegawai]);
         }
 
         return $this->render('update', [
             'model' => $model,
+            'namaPersonal' => $namaPersonal
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "personal".
@@ -84,5 +85,12 @@ class Personal extends \yii\db\ActiveRecord
     public function getPegawai()
     {
         return $this->hasOne(Pegawai::className(), ['id_personal' => 'id_personal']);
+    }
+
+    public static function getAllPersonal()
+    {
+        $personal = Personal::find()->all();
+        $personal = ArrayHelper::map($personal, 'id_personal', 'nama_lengkap');
+        return $personal;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\Pegawai;
 use app\models\Personal;
 use app\models\PersonalSearch;
 use yii\web\Controller;
@@ -70,6 +71,7 @@ class PersonalController extends Controller
     public function actionCreate()
     {
         $model = new Personal();
+        $modelPegawai = new Pegawai();
         $statusPerkawinan = Personal::STATUS_PERKAWINAN;
         $agama = Personal::AGAMA;
         $pendidikan = Personal::PENDIDIKAN;
@@ -77,12 +79,19 @@ class PersonalController extends Controller
         // print_r($statusPerkawinan);
         // die();
         if ($this->request->isPost) {
-            if ($model->load($this->request->post())) {
+            if ($model->load($this->request->post()) && $modelPegawai->load($this->request->post())) {
                 $model->tanggal_lahir = \Yii::$app->formatter->asDate($model->tanggal_lahir, 'yyyy-MM-dd');
-                // echo "<pre>";
-                // print_r($model);
-                // die;
+                $modelPegawai->tanggal_bergabung = \Yii::$app->formatter->asDate($modelPegawai->tanggal_bergabung, 'yyyy-MM-dd');
+
+
                 $model->save();
+                $modelPegawai->id_personal = $model->id_personal;
+                // echo "<pre>";
+                // print_r($modelPegawai);
+                // die;
+
+                $modelPegawai->save();
+
                 return $this->redirect(['view', 'id_personal' => $model->id_personal]);
             }
         } else {
@@ -94,6 +103,7 @@ class PersonalController extends Controller
             'statusPerkawinan' => $statusPerkawinan,
             'agama' => $agama,
             'pendidikan' => $pendidikan,
+            'modelPegawai' => $modelPegawai
         ]);
     }
 

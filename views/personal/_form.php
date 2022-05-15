@@ -131,6 +131,64 @@ use kartik\select2\Select2;
             </label>
         </div> -->
 
+    </div>
+
+    <div class="x_title">
+        <h2>Identitas Personal</h2>
+
+        <div class="clearfix"></div>
+    </div>
+    <div class="x_content">
+        <br>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <?= $form->field($modelPegawai, 'jenis_pegawai')->widget(Select2::classname(), [
+                    'data' => \app\models\Pegawai::JENIS_PEGAWAI,
+                    'options' => ['placeholder' => 'Pilih Jenis Pegawai ...'],
+                    // 'hideSearch'=>true,
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($modelPegawai, 'status_pegawai')->widget(Select2::classname(), [
+                    'data' => ['Kontrak' => 'Kontrak', 'Pegawai Tetap' => 'Pegawai Tetap'],
+                    'options' => ['placeholder' => 'Pilih Status Pegawai ...'],
+                    // 'hideSearch'=>true,
+                    'pluginOptions' => [
+                        'allowClear' => true
+                    ],
+                ]);
+                ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($modelPegawai, 'jabatan')->textInput(['maxlength' => true]) ?>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <?=
+                $form->field($modelPegawai, 'tanggal_bergabung')->widget(DatePicker::classname(), [
+                    'options' => ['placeholder' => 'Pilih tanggal ...'],
+                    'pluginOptions' => [
+                        'autoclose' => true,
+                        'format' => 'dd-M-yyyy'
+                    ]
+                ]);
+
+                ?>
+            </div>
+            <div class="col-md-4">
+                <?= $form->field($modelPegawai, 'gaji')->textInput(['type' => 'number']) ?>
+            </div>
+        </div>
+
+
         <div class="ln_solid"></div>
         <div class="form-group">
             <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
