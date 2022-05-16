@@ -84,8 +84,32 @@ $this->params['breadcrumbs'][] = $this->title;
                 'urlCreator' => function ($action, Pegawai $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id_pegawai' => $model->id_pegawai]);
                 },
-                'headerOptions' => ['style' => 'width:65px']
+                'headerOptions' => ['style' => 'width:100px'],
+                'template' => '{view} {update} {berkas} {delete}',
+                'buttons' => [
+                    'view' => function ($url, $model) {
+                        $url = Yii::$app->urlManager->createUrl(['pegawai/view', 'id_pegawai' => $model->id_pegawai]);
+                        return Html::a('<i class="glyphicon glyphicon-eye-open"></i>', $url, ['title' => 'View']);
+                    },
+                    'update' => function ($url, $model) {
+                        $url = Yii::$app->urlManager->createUrl(['pegawai/update', 'id_pegawai' => $model->id_pegawai]);
+                        return Html::a('<i class="glyphicon glyphicon-pencil"></i>', $url, ['title' => 'Update']);
+                    },
+                    'berkas' => function ($url, $model) {
+                        $url = Yii::$app->urlManager->createUrl(['berkas-pegawai/create', 'id' => $model->id_pegawai]);
+                        return Html::a('<i class="glyphicon glyphicon-file"></i>', $url, ['title' => 'Tambah Berkas']);
+                    },
+                    'delete' => function ($url, $model) {
+                        $url = Yii::$app->urlManager->createUrl(['pegawai/delete', 'id_pegawai' => $model->id_pegawai]);
+                        return Html::a('<i class="glyphicon glyphicon-trash"></i>', $url, [
+                            'title' => 'Delete',
+                            'data-method' => 'post',
+                            'data-confirm' => Yii::t('yii', 'Apakah yakin ingin menghapus data ini?')
+                        ]);
+                    }
+                ]
             ],
+
         ],
     ]); ?>
 

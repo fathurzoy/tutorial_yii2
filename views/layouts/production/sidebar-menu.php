@@ -14,6 +14,7 @@
             "url" => "#",
             "items" => [
               ["label" => "Data Pegawai", "url" => ["pegawai/index"]],
+              ["label" => "Berkas Pegawai", "url" => ["berkas-pegawai/index"]],
             ],
           ],
         ],

@@ -142,4 +142,20 @@ class SiteController extends Controller
         $hello = 'Selamat datang di sini';
         return $hello;
     }
+
+    public function actionRegister()
+    {
+        $model = new \app\models\User();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->validate()) {
+                // form inputs are valid, do something here
+                return;
+            }
+        }
+
+        return $this->render('register', [
+            'model' => $model,
+        ]);
+    }
 }

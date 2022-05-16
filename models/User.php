@@ -2,6 +2,8 @@
 
 namespace app\models;
 
+use yii\base\Model;
+
 use Yii;
 
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -19,7 +21,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['time_create', 'time_update'], 'safe'],
+            [['time_create', 'time_update', 'id_pegawai', 'role'], 'safe'],
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETE]],
         ];
